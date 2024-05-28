@@ -69,6 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Your Name"
+                    android:inputType="text"
                     android:backgroundTint="#302C2C"
                     >
                 </androidx.appcompat.widget.AppCompatEditText>

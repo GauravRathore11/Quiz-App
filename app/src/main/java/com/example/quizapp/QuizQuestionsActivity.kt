@@ -73,7 +73,7 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
             nextBtn?.text="Finish"
         }
         else{
-            nextBtn?.text="Next"
+            nextBtn?.text="Done"
         }
     }
 
@@ -139,14 +139,18 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
             }
             R.id.btn_next->{
                 if(selectedOption==0){
+                    Toast.makeText(this,"Please select one option!",Toast.LENGTH_LONG).show()
+                }
+                else if(selectedOption==-1){
                     currentQuestion++
-
                     if(currentQuestion<=questionList!!.size){
                         setQuestion()
                     }
                     else{
                         Toast.makeText(this,"Score : ${score}/10",Toast.LENGTH_LONG).show()
+                        finish()
                     }
+                    selectedOption=0
                 }
                 else{
                     val question = questionList!!.get(currentQuestion-1)
@@ -157,15 +161,13 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
                         score++
                     }
                     answerView(question!!.correctAns,R.drawable.correct_option_background_bg)
+                    nextBtn?.text="Next"
+                    selectedOption=-1
                 }
 
                 if(currentQuestion == questionList?.size){
                     nextBtn?.text="Finish"
                 }
-
-
-
-                selectedOption=0
             }
         }
     }

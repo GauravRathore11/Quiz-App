@@ -3,6 +3,7 @@ package com.example.quizapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         val etName :  EditText = findViewById<EditText>(R.id.et_name)
 
         btnStart.setOnClickListener{
+
             if(etName.text.isNotEmpty()){
                 val intent = Intent(this,QuizQuestionsActivity::class.java)
                 startActivity(intent)
