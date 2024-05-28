@@ -1,5 +1,6 @@
 package com.example.quizapp
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.example.quizapp.Result
 
 class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
 
@@ -19,6 +21,7 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
     private var currentQuestion : Int = 1
     private var selectedOption : Int = 0
     private var score=0
+    private var userName : String? = null
 
     private var progressBar : ProgressBar? = null
     private var tvProgress : TextView? = null
@@ -35,6 +38,7 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_questions)
 
+        userName=intent.getStringExtra(Constants.USER_NAME)
         progressBar=findViewById(R.id.progressBar)
         tvProgress=findViewById(R.id.tv_progress)
         tvQuestion=findViewById(R.id.tv_question)
@@ -69,10 +73,7 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
         tvOptionFour?.setOnClickListener(this)
         nextBtn?.setOnClickListener(this)
 
-        if(currentQuestion==questionList!!.size){
-            nextBtn?.text="Finish"
-        }
-        else{
+        if(currentQuestion<=questionList!!.size){
             nextBtn?.text="Done"
         }
     }
@@ -147,7 +148,11 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
                         setQuestion()
                     }
                     else{
-                        Toast.makeText(this,"Score : ${score}/10",Toast.LENGTH_LONG).show()
+                        val intent:Intent = Intent(this,Result::class.java)
+                        intent.putExtra(Constants.USER_NAME,userName)
+                        intent.putExtra(Constants.TOTAL_QUESTIONS,questionList?.size.toString())
+                        intent.putExtra(Constants.CORRECT_ANSWERS,score.toString())
+                        startActivity(intent)
                         finish()
                     }
                     selectedOption=0
@@ -165,9 +170,6 @@ class QuizQuestionsActivity : AppCompatActivity(),View.OnClickListener {
                     selectedOption=-1
                 }
 
-                if(currentQuestion == questionList?.size){
-                    nextBtn?.text="Finish"
-                }
             }
         }
     }
